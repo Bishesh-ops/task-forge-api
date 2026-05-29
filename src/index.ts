@@ -13,6 +13,9 @@ app.get('/', (c) => {
 
 app.post('/tasks', TaskController.create)
 app.get('/tasks', TaskController.getAll)
+app.get('/tasks/:id', TaskController.getById)
+app.patch('/tasks/:id', TaskController.update)
+app.delete('/tasks/:id', TaskController.delete)
 
 export default {
     port: 3000,
