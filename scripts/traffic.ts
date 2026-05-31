@@ -76,7 +76,6 @@ async function runLoadTest() {
   const endTime = performance.now();
   const durationStr = ((endTime - startTime) / 1000).toFixed(2);
 
-  // 4. The Report
   console.log(`\n\nLoad Test Complete!`);
   console.log(`-----------------------------------`);
   console.log(` Total Time:   ${durationStr} seconds`);
