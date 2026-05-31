@@ -1,5 +1,5 @@
 import { Context } from 'hono'
-import { treeifyError, z } from 'zod'
+import { z } from 'zod'
 import { TaskService } from '../services/task.service'
 import { taskSchema, updateTaskSchema } from '../schemas/task.schema'
 
@@ -13,7 +13,7 @@ export const TaskController = {
       return c.json({ message: 'Task created.', task: createdTask }, 201)
     } catch (error) {
       if (error instanceof z.ZodError) {
-        return c.json({ error: 'Validation failed', details: z.treeifyError(error)}, 400)
+        return c.json({ error: 'Validation failed', details: z.flattenError(error).fieldErrors}, 400)
       }
       return c.json({ error: 'Internal Server Error' }, 500)
     }
@@ -58,7 +58,7 @@ export const TaskController = {
          return c.json({ error: 'Task not found' }, 404)
       }
       if (error instanceof z.ZodError) {
-        return c.json({ error: 'Validation failed', details: z.treeifyError(error)}, 400)
+        return c.json({ error: 'Validation failed', details: z.flattenError(error).fieldErrors}, 400)
       }
       return c.json({ error: 'Failed to update task' }, 500)
     }

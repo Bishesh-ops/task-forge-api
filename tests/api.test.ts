@@ -19,7 +19,7 @@ describe('Task API Endpoints', () => {
     const data = await response.json()as any
     console.log(JSON.stringify(data.details, null, 2))
     expect(data.error).toBe('Validation failed')
-    expect(data.details.priority).toBeDefined()
+    expect(Array.isArray(data.details.priority)).toBe(true) 
   })
 
   it('Should successfully create a valid task', async () => {
