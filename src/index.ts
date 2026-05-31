@@ -1,26 +1,35 @@
 import { Hono } from 'hono'
+import { logger } from 'hono/logger'
 import { TaskController } from './controllers/task.controller'
 import { AuthController } from './controllers/auth.controller'
+import { authMiddleware } from './middlewares/auth.middleware'
 
-const app = new Hono()
+type Variables = {
+  jwtPayload: {
+    sub: string   // The User ID
+    email: string
+    exp: number
+  }
+}
 
-app.get('/', (c) => {
-    return c.json({
-        status: 'sucess',
-        message: 'Task Forge API is live.',
-        timestamp: new Date().toISOString()
-    })
-})
+const app = new Hono<{ Variables: Variables }>()
 
-app.post('/tasks', TaskController.create)
-app.get('/tasks', TaskController.getAll)
-app.get('/tasks/:id', TaskController.getById)
-app.patch('/tasks/:id', TaskController.update)
-app.delete('/tasks/:id', TaskController.delete)
+app.use('*', logger())
+
+app.get('/', (c) => c.json({ status: 'Task Forge API is live.' }))
+
+// Auth Routes
 app.post('/auth/register', AuthController.register)
 app.post('/auth/login', AuthController.login)
 
-export{ app }
+// Task Routes
+app.post('/tasks', authMiddleware, TaskController.create)
+app.get('/tasks', authMiddleware, TaskController.getAll)
+app.get('/tasks/:id', authMiddleware, TaskController.getById)
+app.patch('/tasks/:id', authMiddleware, TaskController.update)
+app.delete('/tasks/:id', authMiddleware, TaskController.delete)
+
+export { app }
 export default {
     port: 3000,
     fetch: app.fetch,
