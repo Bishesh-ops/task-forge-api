@@ -1,7 +1,7 @@
-import { jwt } from 'hono/jwt'
+import { jwt } from "hono/jwt";
+import { env } from "../config/env";
 
-const JWT_SECRET = process.env.API_KEY || 'fallack_secret'
 export const authMiddleware = jwt({
-    secret: JWT_SECRET,
-    alg: 'HS256',
-})
+  secret: env.API_KEY,
+  alg: "HS256",
+});

@@ -1,4 +1,5 @@
 import { z } from "zod";
+console.log(process.env.API_KEY);
 
 const envSchema = z.object({
   PORT: z.coerce.number().default(3000),

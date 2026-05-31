@@ -1,7 +1,12 @@
 import { Context } from "hono";
 import { z } from "zod";
+import { HTTPException } from "hono/http-exception";
 
 export const errorHandler = (err: Error, c: Context) => {
+  if (err instanceof HTTPException) {
+    return err.getResponse();
+  }
+
   if (err instanceof z.ZodError) {
     return c.json(
       {
@@ -31,6 +36,7 @@ export const errorHandler = (err: Error, c: Context) => {
     const status = err.message === "Invalid credentials" ? 401 : 400;
     return c.json({ error: err.message }, status);
   }
+
   console.error(`[Unhandled Exception]`, err);
   return c.json({ error: "Internal Server Error" }, 500);
 };
