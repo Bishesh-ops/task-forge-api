@@ -23,7 +23,7 @@ app.get("/", (c) => c.json({ status: "Task Forge API is live." }));
 app.use(
   "*",
   cors({
-    origin: "http://localhost:5713",
+    origin: "http://localhost:5173",
     allowMethods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
     allowHeaders: ["Content-Type", "Authorization"],
   }),

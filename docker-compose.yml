@@ -10,7 +10,7 @@ services:
     environment:
       - NODE_ENV=production
       - PORT=3000
-      - API_KEY=super_secret_forge_key_123
+      - JWT_SECRET=a_long_very_random_secret_string_for_development
       - DATABASE_URL=file:/app/dev.db
     volumes:
       - ./dev.db:/app/dev.db

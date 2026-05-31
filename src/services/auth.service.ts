@@ -25,7 +25,7 @@ export const AuthService = {
       exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24, // Expires in 24 hours
     };
 
-    const token = await sign(payload, env.API_KEY);
+    const token = await sign(payload, env.JWT_SECRET);
 
     return { user: { id: user.id, email: user.email }, token };
   },
@@ -45,7 +45,7 @@ export const AuthService = {
       exp: Math.floor(Date.now() / 1000) + 60 * 60 * 24,
     };
 
-    const token = await sign(payload, env.API_KEY);
+    const token = await sign(payload, env.JWT_SECRET);
 
     return { user: { id: user.id, email: user.email }, token };
   },
