@@ -1,56 +1,55 @@
-import { describe, it, expect } from 'bun:test'
-import { app } from '../src/index'
+import { describe, it, expect } from "bun:test";
+import { app } from "../src/index";
 
-describe('Task API Endpoints', () => {
-  
-  it('Should reject a task with an invalid priority', async () => {
-    const response = await app.request('/tasks', {
-      method: 'POST',
+describe("Task API Endpoints", () => {
+  it("Should reject a task with an invalid priority", async () => {
+    const response = await app.request("/tasks", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        title: 'Learn Unit Testing',
-        priority: 10 // Invalid! Max is 5.
+        title: "Learn Unit Testing",
+        priority: 10, // Invalid! Max is 5.
       }),
-    })
-    expect(response.status).toBe(400)
+    });
+    expect(response.status).toBe(400);
 
-    const data = await response.json()as any
-    console.log(JSON.stringify(data.details, null, 2))
-    expect(data.error).toBe('Validation failed')
-    expect(Array.isArray(data.details.priority)).toBe(true) 
-  })
+    const data = (await response.json()) as any;
+    console.log(JSON.stringify(data.details, null, 2));
+    expect(data.error).toBe("Validation failed");
+    expect(Array.isArray(data.details.priority)).toBe(true);
+  });
 
-  it('Should successfully create a valid task', async () => {
-    const response = await app.request('/tasks', {
-      method: 'POST',
+  it("Should successfully create a valid task", async () => {
+    const response = await app.request("/tasks", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        title: 'Implement API Tests',
-        priority: 1
+        title: "Implement API Tests",
+        priority: 1,
       }),
-    })
+    });
 
-    expect(response.status).toBe(201)
-    
-    const data = await response.json() as any
-    expect(data.message).toBe('Task created.')
-    expect(data.task.title).toBe('Implement API Tests')
-    expect(data.task.id).toBeDefined() 
-  })
+    expect(response.status).toBe(201);
 
-  it('Should fetch all tasks', async () => {
-    const response = await app.request('/tasks', {
-      method: 'GET'
-    })
+    const data = (await response.json()) as any;
+    expect(data.message).toBe("Task created.");
+    expect(data.task.title).toBe("Implement API Tests");
+    expect(data.task.id).toBeDefined();
+  });
 
-    expect(response.status).toBe(200)
-    
-    const data = await response.json() as any
-    expect(Array.isArray(data.tasks)).toBe(true)
-    expect(data.tasks.length).toBeGreaterThan(0) 
-  })
-})
+  it("Should fetch all tasks", async () => {
+    const response = await app.request("/tasks", {
+      method: "GET",
+    });
+
+    expect(response.status).toBe(200);
+
+    const data = (await response.json()) as any;
+    expect(Array.isArray(data.tasks)).toBe(true);
+    expect(data.tasks.length).toBeGreaterThan(0);
+  });
+});

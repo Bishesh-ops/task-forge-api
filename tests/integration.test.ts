@@ -1,7 +1,6 @@
 import { describe, it, expect, beforeAll, afterAll } from "bun:test";
 import { app } from "../src/index";
 import { prisma } from "../src/db/client";
-import { execSync } from "child_process";
 
 let authToken = "";
 let testTaskId = "";

@@ -1,0 +1,16 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: task-forge-api
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - API_KEY=super_secret_forge_key_123
+      - DATABASE_URL=file:/app/dev.db
+    volumes:
+      - ./dev.db:/app/dev.db
