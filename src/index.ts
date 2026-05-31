@@ -4,7 +4,8 @@ import { TaskController } from "./controllers/task.controller";
 import { AuthController } from "./controllers/auth.controller";
 import { authMiddleware } from "./middlewares/auth.middleware";
 import { errorHandler } from "./middlewares/error.middleware";
-import { env } from './config/env'
+import { env } from "./config/env";
+import { cors } from "hono/cors";
 
 type Variables = {
   jwtPayload: {
@@ -19,6 +20,14 @@ const app = new Hono<{ Variables: Variables }>();
 app.onError(errorHandler);
 app.use("*", logger());
 app.get("/", (c) => c.json({ status: "Task Forge API is live." }));
+app.use(
+  "*",
+  cors({
+    origin: "http://localhost:5713",
+    allowMethods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
+    allowHeaders: ["Content-Type", "Authorization"],
+  }),
+);
 
 // Auth Routes
 app.post("/auth/register", AuthController.register);
