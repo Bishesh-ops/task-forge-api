@@ -17,6 +17,7 @@ app.get('/tasks/:id', TaskController.getById)
 app.patch('/tasks/:id', TaskController.update)
 app.delete('/tasks/:id', TaskController.delete)
 
+export{ app }
 export default {
     port: 3000,
     fetch: app.fetch,
