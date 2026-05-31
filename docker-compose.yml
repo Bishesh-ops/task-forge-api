@@ -2,7 +2,7 @@ services:
   api:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: api/Dockerfile
     container_name: task-forge-api
     restart: unless-stopped
     ports:
@@ -11,6 +11,6 @@ services:
       - NODE_ENV=production
       - PORT=3000
       - JWT_SECRET=a_long_very_random_secret_string_for_development
-      - DATABASE_URL=file:/app/dev.db
+      - DATABASE_URL=file:/app/api/dev.db
     volumes:
-      - ./dev.db:/app/dev.db
+      - ./api/dev.db:/app/api/dev.db
