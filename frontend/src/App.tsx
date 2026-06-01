@@ -18,7 +18,9 @@ const rootRoute = createRootRoute({
       <nav className='bg-white shadow-sm px-6 py-4 flex-justify-between items-center border-b'>
         <h1 className='font-extrabold text-xl tracking-right'>Task Forge</h1>
         <div className='flex gap-6 text-sm font-medium'>
-          <Link to="/tasks" className="[&.active]:text-blue-600 hover:text-blue-500">Tasks</Link>
+        // frontend/src/App.tsx (inside your rootRoute component)
+
+<Link to="/tasks" search={{ status: undefined }} className="[&.active]:text-blue-600 hover:text-blue-500">Tasks</Link>
           <Link to="/login" className="[&.active]:text-blue-600 hover:text-blue-500">Login</Link>
           <Link to="/register" className="[&.active]:text-blue-600 hover:text-blue-500">Register</Link>
         </div>
@@ -46,6 +48,11 @@ const registerRoute = createRoute({
 const tasksRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/tasks',
+  validateSearch: (search: Record<string, unknown>) => {
+    return {
+      status: search.status as 'TODO' | 'IN_PROGRESS' | 'DONE' | undefined,
+    };
+  },
   beforeLoad: () => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -59,10 +66,12 @@ const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/',
   beforeLoad: () => {
-    throw redirect({ to: '/tasks' });
+    throw redirect({ 
+      to: '/tasks',
+      search: { status: undefined }
+    });
   }
 });
-
 const routeTree = rootRoute.addChildren([indexRoute, loginRoute, registerRoute, tasksRoute]);
 
 const router = createRouter({ routeTree });
