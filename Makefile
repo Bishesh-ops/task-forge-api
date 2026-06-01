@@ -18,6 +18,6 @@ clean: down
 	docker rmi $(APP_NAME) || true
 	docker system prune -f
 test:
-	DATABASE_URL="file:./test.db" bun test tests/integration.test.ts
+	DATABASE_URL="file:./test.db" bun test /api/tests/integration.test.ts
 traffic:
-	bun run scripts/traffic.ts
+	bun run /api/scripts/traffic.ts
