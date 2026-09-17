@@ -13,21 +13,19 @@ import { Tasks } from './pages/Tasks';
 
 const rootRoute = createRootRoute({
   component: () => (
-    <div className="min-h-screen bg-gray-50 t ext-gray-900 font-sans">
+    <div className="min-h-screen bg-gray-50 text-gray-900 font-sans">
       {/* Navigation Bar */}
-      <nav className='bg-white shadow-sm px-6 py-4 flex-justify-between items-center border-b'>
-        <h1 className='font-extrabold text-xl tracking-right'>Task Forge</h1>
+      <nav className="bg-white shadow-sm px-6 py-4 flex justify-between items-center border-b">
+        <h1 className="font-extrabold text-xl tracking-tight">Task Forge</h1>
         <div className='flex gap-6 text-sm font-medium'>
-        // frontend/src/App.tsx (inside your rootRoute component)
-
-<Link to="/tasks" search={{ status: undefined }} className="[&.active]:text-blue-600 hover:text-blue-500">Tasks</Link>
+          <Link to="/tasks" search={{ status: undefined }} className="[&.active]:text-blue-600 hover:text-blue-500">Tasks</Link>
           <Link to="/login" className="[&.active]:text-blue-600 hover:text-blue-500">Login</Link>
           <Link to="/register" className="[&.active]:text-blue-600 hover:text-blue-500">Register</Link>
         </div>
       </nav>
       {/* Main Content Area */}
-      <main className='p-6 max-w-5xl mx-auto'>
-        <Outlet />{/*Child routes will go here */}
+      <main className="p-6 max-w-5xl mx-auto">
+        <Outlet />
       </main>
     </div>
   ),

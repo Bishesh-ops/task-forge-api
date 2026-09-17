@@ -28,7 +28,7 @@ export function Register() {
       }
 
       localStorage.setItem('token', data.token);
-      navigate({ to: '/tasks' });
+      navigate({ to: '/tasks', search: { status: undefined } });
 
     }  catch (err: unknown) {
       if (err instanceof Error) {
